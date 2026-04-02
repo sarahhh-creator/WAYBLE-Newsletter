@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAYBLE Newsletter — ESG 뉴스레터</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --c-main:  #194F90;
+      --c-sub1:  #5192E1;
+      --c-sub2:  #8BB6EB;
+      --c-sub3:  #C5DBF5;
+      --c-bg:    #F0F6FF;
+      --c-text:  #1A1A2E;
+      --c-muted: #6B7A99;
+      --radius:  18px;
+      --max-w:   760px;
+    }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background:
+        linear-gradient(160deg, rgba(10,35,80,.82) 0%, rgba(25,79,144,.72) 55%, rgba(20,90,130,.78) 100%),
+        url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1920&q=80&auto=format&fit=crop')
+        center center / cover no-repeat;
+      color: #fff;
+      padding: 72px 24px 84px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* 하단 페이드 효과 */
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(25,79,144,.45) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 99px;
+      padding: 6px 16px 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--c-sub3);
+      margin-bottom: 22px;
+      backdrop-filter: blur(4px);
+    }
+    .brand-pill-dot {
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.3);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(74,222,128,.1); }
+    }
+
+    header h1 {
+      font-size: clamp(26px, 5.5vw, 44px);
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -.03em;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+    header h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #93c5fd, #a5f3c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p.header-desc {
+      font-size: 15.5px;
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+      max-width: 380px;
+      margin-bottom: 32px;
+    }
+
+    /* 헤더 구독 버튼 */
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.18);
+      border: 1.5px solid rgba(255,255,255,.4);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 24px;
+      border-radius: 99px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      transition: background .2s, border-color .2s, transform .18s;
+    }
+    .header-cta:hover {
+      background: rgba(255,255,255,.28);
+      border-color: rgba(255,255,255,.6);
+      transform: translateY(-1px);
+    }
+
+    /* 웨이브 구분선 */
+    .wave-divider {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin-top: -2px;
+    }
+    .wave-divider svg { display: block; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .list-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--c-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .count-pill {
+      background: var(--c-main);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 99px;
+      padding: 3px 11px;
+    }
+
+    /* ── NOTICE BANNER ── */
+    .notice-banner {
+      background: linear-gradient(135deg, #eaf3ff 0%, #f0f9f4 100%);
+      border: 1px solid #c5dbf5;
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .notice-icon {
+      width: 38px; height: 38px;
+      background: var(--c-main);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .notice-text {
+      font-size: 13.5px;
+      color: var(--c-main);
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .notice-text span { font-weight: 800; }
+    .notice-sub {
+      font-size: 13px;
+      color: var(--c-muted);
+      font-weight: 400;
+    }
+    .notice-subscribe-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: var(--c-main);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: background .18s, transform .18s;
+      white-space: nowrap;
+    }
+    .notice-subscribe-btn:hover {
+      background: #123e75;
+      transform: translateY(-1px);
+    }
+
+    /* ── UNIFIED ISSUE LIST ── */
+    .issue-list-wrap {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 28px rgba(25,79,144,.08);
+      overflow: hidden;
+    }
+
+    .issue-row {
+      display: flex;
+      align-items: center;
+      padding: 26px 28px;
+      text-decoration: none;
+      color: inherit;
+      gap: 20px;
+      transition: background .18s;
+      position: relative;
+    }
+    .issue-row:hover {
+      background: #f5f9ff;
+    }
+    .issue-row + .issue-row {
+      border-top: 1px solid #e8f0fb;
+    }
+    .issue-row.is-latest {
+      background: linear-gradient(100deg, #f3f8ff 0%, #fafcff 100%);
+    }
+    .issue-row.is-latest:hover {
+      background: linear-gradient(100deg, #eaf3ff 0%, #f5f9ff 100%);
+    }
+
+    /* 호수 배지 */
+    .row-num {
+      width: 64px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--c-main) 0%, var(--c-sub1) 100%);
+      border-radius: 14px;
+      padding: 14px 8px;
+      gap: 2px;
+    }
+    .num-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.65);
+      text-transform: uppercase;
+    }
+    .num-val {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -.03em;
+    }
+
+    /* 콘텐츠 영역 */
+    .row-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .row-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .row-date {
+      font-size: 12px;
+      color: var(--c-muted);
+      font-weight: 500;
+    }
+    .latest-badge {
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      padding: 2px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+    }
+    .row-headline {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: var(--c-text);
+      letter-spacing: -.015em;
+    }
+    .row-preview {
+      font-size: 13.5px;
+      color: var(--c-muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .row-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .row-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--c-sub1);
+      background: #eaf2ff;
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+
+    /* 화살표 */
+    .row-arrow {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--c-sub3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-main);
+      transition: background .18s, transform .18s;
+    }
+    .issue-row:hover .row-arrow {
+      background: var(--c-sub1);
+      color: #fff;
+      transform: translateX(3px);
+    }
+
+    /* ── EMPTY ── */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--c-muted);
+    }
+
+    /* ── SUBSCRIBE MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,22,45,.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 22px;
+      padding: 38px 32px 32px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 24px 60px rgba(0,0,0,.18);
+      position: relative;
+      animation: popIn .22s ease;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.96) translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: var(--c-bg); border: none; border-radius: 10px;
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--c-muted); transition: background .15s;
+    }
+    .modal-close:hover { background: var(--c-sub3); color: var(--c-main); }
+    .modal-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--c-sub3), #deeeff);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--c-main);
+    }
+    .modal-box h2 { font-size: 20px; font-weight: 900; color: var(--c-main); margin-bottom: 6px; }
+    .modal-desc { font-size: 14px; color: var(--c-muted); line-height: 1.6; margin-bottom: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--c-text); margin-bottom: 6px; }
+    .required { color: var(--c-sub1); margin-left: 2px; }
+    .form-group input[type="text"],
+    .form-group input[type="email"] {
+      width: 100%; border: 1.5px solid #d8e5f5; border-radius: 10px;
+      padding: 11px 14px; font-size: 15px; font-family: inherit;
+      color: var(--c-text); background: #fafcff; transition: border-color .15s; outline: none;
+    }
+    .form-group input:focus { border-color: var(--c-sub1); background: #fff; }
+    .checkbox-group {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 13px; border: 1.5px solid #e6eef8; border-radius: 10px;
+      margin-bottom: 10px; cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .checkbox-group:hover { border-color: var(--c-sub2); background: #fafcff; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--c-main); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+    .checkbox-label { font-size: 13px; line-height: 1.55; color: var(--c-text); }
+    .checkbox-label strong { color: var(--c-main); font-weight: 700; }
+    .form-error-box {
+      font-size: 13px; color: #d94f4f; display: none;
+      margin-bottom: 12px; padding: 10px 13px;
+      background: #fff5f5; border-radius: 9px; border: 1px solid #f5d0d0;
+    }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--c-main), var(--c-sub1)); color: #fff;
+      border: none; border-radius: 11px; padding: 14px;
+      font-size: 15px; font-weight: 800; font-family: inherit;
+      cursor: pointer; transition: opacity .15s, transform .15s; margin-top: 4px;
+    }
+    .btn-submit:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .success-state { text-align: center; padding: 20px 0 8px; }
+    .success-check {
+      width: 64px; height: 64px; background: #e8f5e9; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; color: #22c55e;
+    }
+    .success-state h3 { font-size: 20px; font-weight: 900; color: var(--c-main); margin-bottom: 8px; }
+    .success-state p { font-size: 14px; color: var(--c-muted); line-height: 1.65; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d2d55;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    footer a { color: var(--c-sub3); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -.01em;
+      margin-bottom: 8px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      header { padding: 56px 20px 68px; }
+      .issue-row { padding: 20px 18px; gap: 14px; }
+      .row-num { width: 52px; padding: 12px 6px; }
+      .num-val { font-size: 22px; }
+      .row-headline { font-size: 14.5px; }
+      .row-arrow { width: 28px; height: 28px; }
+      .notice-subscribe-btn { display: none; }
+      .notice-banner { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand-pill">
+      <span class="brand-pill-dot"></span>
+      WAYBLE Newsletter · 매주 발행
+    </div>
+    <h1>지구를 위한 비즈니스 인사이트<br><em>ESG 위클리 뉴스레터</em></h1>
+    <p class="header-desc">매주 월요일, 국내 ESG 핵심 이슈를 선별해 전달합니다.<br>환경·사회·지배구조 흐름을 한눈에 파악하세요.</p>
+    <button class="header-cta" onclick="openModal()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+      </svg>
+      뉴스레터 구독하기
+    </button>
+  </div>
+</header>
+
+<!-- 웨이브 -->
+<div class="wave-divider">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" width="100%" height="60" preserveAspectRatio="none">
+    <path fill="#F0F6FF" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<main>
+  <!-- 안내 배너 -->
+  <div class="notice-banner">
+    <div class="notice-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4M12 16h.01"/>
+      </svg>
+    </div>
+    <div>
+      <div class="notice-text"><span>매주 월요일</span> 오전 발행됩니다.</div>
+      <div class="notice-sub">구독하면 이메일로 가장 먼저 받아볼 수 있어요.</div>
+    </div>
+    <button class="notice-subscribe-btn" onclick="openModal()">구독하기</button>
+  </div>
+
+  <div class="list-header">
+    <div class="list-title">
+      전체 발행 목록
+      <span class="count-pill" id="count-badge">0호</span>
+    </div>
+  </div>
+
+  <div class="issue-list-wrap" id="issue-list"></div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">WAYBLE Newsletter</div>
+  <p>
+    <a href="https://circular.wayble.eco" target="_blank" rel="noopener">WAYBLE</a>
+    &nbsp;·&nbsp; 순환경제 플랫폼
+  </p>
+  <p style="margin-top:6px;">ⓒ 2026 WAYBLE. All rights reserved.</p>
+</footer>
+
+<!-- 구독 모달 -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="form-view">
+      <div class="modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+        </svg>
+      </div>
+      <h2>WAYBLE Newsletter 구독하기</h2>
+      <p class="modal-desc">매주 월요일, 국내 ESG 핵심 이슈를 이메일로 받아보세요.</p>
+      <form id="subscribe-form" novalidate>
+        <div class="form-group">
+          <label for="sub-name">이름 <span class="required">*</span></label>
+          <input type="text" id="sub-name" placeholder="홍길동" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="sub-email">이메일 <span class="required">*</span></label>
+          <input type="email" id="sub-email" placeholder="hello@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="checkbox-group">
+            <input type="checkbox" id="agree-privacy">
+            <span class="checkbox-label"><strong>[필수]</strong> 개인정보 수집·이용에 동의합니다.<br><span style="font-size:12px;color:var(--c-muted);">이름, 이메일을 뉴스레터 발송 목적으로 수집합니다.</span></span>
+          </label>
+          <label class="checkbox-group">
+            <input type="checkbox" id="agree-marketing">
+            <span class="checkbox-label"><strong>[필수]</strong> 마케팅 정보 수신 및 활용에 동의합니다.<br><span style="font-size:12px;color:var(--c-muted);">WAYBLE의 소식 및 ESG 관련 정보를 수신합니다.</span></span>
+          </label>
+        </div>
+        <div class="form-error-box" id="sub-error"></div>
+        <button type="submit" class="btn-submit" id="btn-submit">구독 신청하기</button>
+      </form>
+    </div>
+    <div id="success-view" style="display:none">
+      <div class="success-state">
+        <div class="success-check"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>구독 신청이 완료되었습니다!</h3>
+        <p>매주 월요일, 따끈한 ESG 뉴스를<br>이메일로 보내드릴게요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="newsletter-data.js"></script>
+<script>
+(function () {
+  const list  = document.getElementById('issue-list');
+  const badge = document.getElementById('count-badge');
+
+  function formatDate(str) {
+    const [y, m, d] = str.split('-');
+    return `${parseInt(y)}년 ${parseInt(m)}월 ${parseInt(d)}일`;
+  }
+
+  const TAGS = {
+    2: ['RE100', '재생에너지', '순환경제'],
+    1: ['ESG공시', '탄소세', '공급망'],
+  };
+
+  function render(data) {
+    badge.textContent = data.length + '호';
+    if (!data.length) {
+      list.innerHTML = '<div class="empty-state"><p>아직 발행된 뉴스레터가 없습니다.</p></div>';
+      return;
+    }
+
+    const sorted = [...data].sort((a, b) => b.issue - a.issue);
+
+    list.innerHTML = sorted.map((n, idx) => {
+      const isLatest = idx === 0;
+      const tags = (TAGS[n.issue] || []).slice(0, 3);
+      return `
+        <a class="issue-row${isLatest ? ' is-latest' : ''}" href="newsletter.html?issue=${n.issue}">
+          <div class="row-num">
+            <span class="num-label">No.</span>
+            <span class="num-val">${n.issue}</span>
+          </div>
+          <div class="row-content">
+            <div class="row-meta">
+              <span class="row-date">${formatDate(n.date)}</span>
+              ${isLatest ? '<span class="latest-badge">최신호</span>' : ''}
+            </div>
+            <div class="row-headline">${n.headMessage}</div>
+            <div class="row-preview">${n.summary}</div>
+            <div class="row-tags">
+              ${tags.map(t => `<span class="row-tag"># ${t}</span>`).join('')}
+            </div>
+          </div>
+          <div class="row-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  render(typeof NEWSLETTERS !== 'undefined' ? NEWSLETTERS : []);
+})();
+
+// ── 구독 모달 ──
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxbGiUpIhBDVVNWrqF1HFgR-1sfs1DJf3LheqGARC5BqtHvDmJgAox_7AG7wGjuNhno/exec';
+
+const subOverlay = document.getElementById('modal-overlay');
+
+function openModal() {
+  subOverlay.classList.add('show');
+  setTimeout(() => document.getElementById('sub-name').focus(), 100);
+}
+function closeModal() {
+  subOverlay.classList.remove('show');
+}
+document.getElementById('modal-close').addEventListener('click', closeModal);
+subOverlay.addEventListener('click', e => { if (e.target === subOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('subscribe-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const name    = document.getElementById('sub-name').value.trim();
+  const email   = document.getElementById('sub-email').value.trim();
+  const privacy = document.getElementById('agree-privacy').checked;
+  const mkt     = document.getElementById('agree-marketing').checked;
+  const errBox  = document.getElementById('sub-error');
+  const btn     = document.getElementById('btn-submit');
+
+  const showErr = msg => { errBox.textContent = msg; errBox.style.display = 'block'; };
+  if (!name)    return showErr('이름을 입력해주세요.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('올바른 이메일 주소를 입력해주세요.');
+  if (!privacy) return showErr('개인정보 수집·이용 동의가 필요합니다.');
+  if (!mkt)     return showErr('마케팅 활용 동의가 필요합니다.');
+
+  errBox.style.display = 'none';
+  btn.disabled = true; btn.textContent = '신청 중…';
+  try {
+    const body = new URLSearchParams({
+      type: 'subscribe', name, email,
+      privacyAgree: String(privacy), marketingAgree: String(mkt)
+    });
+    await fetch(GAS_ENDPOINT, { method: 'POST', body });
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+  } catch {
+    showErr('전송 중 오류가 발생했습니다.'); btn.disabled = false; btn.textContent = '구독 신청하기';
+  }
+});
+</script>
+</body>
+</html>

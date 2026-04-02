@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAYBLE Newsletter</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --c-main:  #194F90;
+      --c-sub1:  #5192E1;
+      --c-sub2:  #8BB6EB;
+      --c-sub3:  #C5DBF5;
+      --c-bg:    #EEF4FC;
+      --c-text:  #1A1A2E;
+      --c-muted: #6B7A99;
+      --radius:  20px;
+      --max-w:   680px;
+    }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: #0d2d55;
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar-logo {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top-bar-logo-dot {
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+    .top-bar-sub-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-sub1);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .top-bar-sub-btn:hover { background: #3d7fd4; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(150deg, #0d2d55 0%, var(--c-main) 55%, #2a72c4 100%);
+      padding: 52px 24px 60px;
+      text-align: center;
+      position: relative;
+    }
+    /* 장식 블롭 — overflow hidden 없이 clip-path으로 제한 */
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-blob-1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(81,146,225,.35) 0%, transparent 65%);
+      top: -100px; right: -80px;
+      clip-path: inset(0 0 0 0);
+    }
+    .hero-blob-2 {
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(197,219,245,.2) 0%, transparent 65%);
+      bottom: -40px; left: 5%;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: var(--max-w); margin: 0 auto; }
+    .issue-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 99px;
+      padding: 6px 16px;
+      color: var(--c-sub3);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(19px, 3.8vw, 26px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.4;
+      letter-spacing: -.02em;
+      margin-bottom: 14px;
+    }
+    .hero-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,.6);
+      background: rgba(255,255,255,.08);
+      padding: 5px 14px;
+      border-radius: 99px;
+    }
+
+    /* 공유 버튼 영역 */
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 18px;
+      position: relative;
+    }
+    .share-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 99px;
+      padding: 8px 16px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .share-trigger:hover { background: rgba(255,255,255,.25); }
+
+    /* 공유 패널 — position: fixed로 클리핑 방지 */
+    .share-panel {
+      display: none;
+      position: fixed;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(10,25,60,.22);
+      padding: 20px;
+      width: 290px;
+      z-index: 9999;
+      animation: panel-in .18s ease;
+      text-align: left;
+    }
+    .share-panel.open { display: block; }
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .share-panel-title { font-size: 13px; font-weight: 800; color: var(--c-main); margin-bottom: 14px; }
+    .share-social-row { display: flex; gap: 10px; margin-bottom: 14px; }
+    .share-social-btn {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 10px 6px;
+      border-radius: 12px;
+      border: 1.5px solid #e6eef8;
+      background: #fafcff;
+      cursor: pointer;
+      font-size: 11px; font-weight: 700; color: var(--c-muted);
+      text-decoration: none;
+      transition: border-color .15s, background .15s;
+    }
+    .share-social-btn:hover { border-color: var(--c-sub1); background: var(--c-sub3); color: var(--c-main); }
+    .share-url-row { display: flex; gap: 8px; align-items: center; }
+    .share-url-input {
+      flex: 1;
+      border: 1.5px solid #dce8f8; border-radius: 9px;
+      padding: 8px 10px; font-size: 11px; font-family: inherit;
+      color: var(--c-muted); background: #f5f9ff; outline: none;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: default;
+    }
+    .share-copy-btn {
+      flex-shrink: 0;
+      background: var(--c-main); color: #fff; border: none; border-radius: 9px;
+      padding: 8px 12px; font-size: 12px; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: opacity .15s; white-space: nowrap;
+    }
+    .share-copy-btn:hover { opacity: .85; }
+    .share-copy-btn.copied { background: #22c55e; }
+
+    /* 웨이브 */
+    .wave-divider { display: block; width: 100%; overflow: hidden; line-height: 0; margin-top: -2px; }
+    .wave-divider svg { display: block; }
+
+    /* ── 통합 뉴스레터 본문 카드 ── */
+    .content-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+    .newsletter-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 28px rgba(25,79,144,.08);
+      overflow: hidden;
+      margin-top: 28px;
+    }
+
+    /* 각 섹션 공통 패딩 */
+    .nl-section { padding: 36px 36px 32px; }
+
+    /* 섹션 구분선 */
+    .nl-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #dce8f8 15%, #dce8f8 85%, transparent 100%);
+      margin: 0 24px;
+    }
+
+    /* ── 요약·TOC 섹션 — 중앙정렬 ── */
+    .summary-section {
+      padding: 36px 36px 32px;
+      text-align: center;
+    }
+    .summary-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--c-sub1);
+      background: var(--c-sub3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .summary-text {
+      font-size: 16.5px;
+      line-height: 1.9;
+      color: #3a4a62;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .toc-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .toc-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      background: var(--c-sub1);
+      border-radius: 5px;
+      padding: 2px 7px;
+      flex-shrink: 0;
+    }
+    .toc-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--c-main);
+      text-decoration: none;
+      line-height: 1.4;
+      border-bottom: 1px dashed var(--c-sub2);
+      transition: color .15s, border-color .15s;
+    }
+    .toc-link:hover { color: var(--c-sub1); border-color: var(--c-sub1); }
+
+    /* ── 아티클 섹션 ── */
+    .article-section {
+      padding: 32px 36px;
+      scroll-margin-top: 58px; /* 고정 헤더 높이 + 여유 */
+    }
+    .article-section:hover { background: #fafcff; }
+
+    .article-num-row {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 중앙정렬 */
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .article-num-badge {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      color: var(--c-sub1);
+      background: var(--c-sub3);
+      padding: 5px 14px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .article-title {
+      font-size: 21px; /* 더 크게 */
+      font-weight: 800;
+      line-height: 1.42;
+      color: var(--c-text);
+      letter-spacing: -.02em;
+      margin-bottom: 20px;
+      text-align: center; /* 중앙정렬 */
+    }
+    .article-body { font-size: 15px; line-height: 1.88; color: #3a4a62; }
+    .article-body p { margin-bottom: 14px; }
+    .article-body p:last-child { margin-bottom: 0; }
+    /* 핵심 메시지 강조 */
+    .article-body strong {
+      background: linear-gradient(to bottom, transparent 55%, rgba(81,146,225,.18) 55%);
+      font-weight: 700;
+      color: #1a3a6e;
+    }
+
+    .article-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px dashed #dce8f8;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .article-source {
+      font-size: 12px;
+      color: var(--c-muted);
+      line-height: 1.5;
+    }
+    .article-source strong { background: none; font-weight: 700; color: var(--c-sub1); }
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--c-sub1);
+      text-decoration: none;
+      padding: 7px 14px;
+      border: 1.5px solid var(--c-sub2);
+      border-radius: 9px;
+      white-space: nowrap;
+      transition: all .15s;
+    }
+    .article-link:hover { background: var(--c-sub1); color: #fff; border-color: var(--c-sub1); }
+
+    /* ── WAYBLE 버튼 섹션 ── */
+    .cta-section { padding: 28px 36px; background: linear-gradient(135deg, #f0f6ff, #e8f2ff); }
+    .btn-wayble {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: linear-gradient(135deg, #0d2d55, var(--c-sub1));
+      color: #fff;
+      border-radius: 12px;
+      padding: 16px 24px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: inherit;
+      text-decoration: none;
+      transition: box-shadow .15s, transform .15s;
+      box-shadow: 0 4px 18px rgba(25,79,144,.25);
+      width: 100%;
+    }
+    .btn-wayble:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(25,79,144,.35); }
+
+    /* ── 피드백 섹션 ── */
+    .feedback-section { padding: 32px 36px; }
+    .feedback-emoji { font-size: 28px; margin-bottom: 10px; }
+    .feedback-section h3 { font-size: 17px; font-weight: 900; color: var(--c-main); margin-bottom: 6px; }
+    .feedback-section p { font-size: 14px; color: var(--c-muted); line-height: 1.6; margin-bottom: 20px; }
+    .feedback-btn-row { display: flex; gap: 12px; }
+    .btn-fb {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 16px;
+      border-radius: 11px;
+      font-size: 14px; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: transform .15s, box-shadow .15s;
+      text-decoration: none; border: none;
+    }
+    .btn-fb:hover { transform: translateY(-2px); }
+    .btn-fb-outline { background: #fff; color: var(--c-main); border: 2px solid var(--c-sub2); }
+    .btn-fb-outline:hover { background: var(--c-sub3); border-color: var(--c-sub1); }
+    .btn-fb-solid { background: linear-gradient(135deg, var(--c-main), var(--c-sub1)); color: #fff; box-shadow: 0 4px 16px rgba(25,79,144,.22); }
+    .btn-fb-solid:hover { box-shadow: 0 8px 24px rgba(25,79,144,.32); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d2d55; color: rgba(255,255,255,.6);
+      text-align: center; padding: 32px 24px;
+      font-size: 13px; line-height: 1.8;
+    }
+    footer a { color: var(--c-sub3); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-logo { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+
+    /* ── 404 ── */
+    .not-found { max-width: var(--max-w); margin: 80px auto; padding: 0 24px; text-align: center; color: var(--c-muted); }
+    .not-found h2 { font-size: 22px; font-weight: 800; color: var(--c-main); margin-bottom: 12px; }
+
+    /* ── MODAL 공통 ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,22,45,.6); z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 24px; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 22px; width: 100%; max-width: 440px;
+      padding: 38px 32px 32px; position: relative;
+      animation: modal-in .22s ease; max-height: 92vh; overflow-y: auto;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(18px) scale(.96); }
+      to   { opacity: 1; transform: none; }
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--c-bg); border: none; border-radius: 10px;
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--c-muted); transition: background .15s;
+    }
+    .modal-close:hover { background: var(--c-sub3); color: var(--c-main); }
+    .modal-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--c-sub3), #deeeff);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--c-main);
+    }
+    .modal h2 { font-size: 20px; font-weight: 900; color: var(--c-main); margin-bottom: 6px; }
+    .modal-desc { font-size: 14px; color: var(--c-muted); line-height: 1.6; margin-bottom: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--c-text); margin-bottom: 6px; }
+    .required { color: var(--c-sub1); margin-left: 2px; }
+    .form-group input[type="text"],
+    .form-group input[type="email"] {
+      width: 100%; border: 1.5px solid #d8e5f5; border-radius: 10px;
+      padding: 11px 14px; font-size: 15px; font-family: inherit;
+      color: var(--c-text); background: #fafcff; transition: border-color .15s; outline: none;
+    }
+    .form-group input:focus { border-color: var(--c-sub1); background: #fff; }
+    .checkbox-group {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 13px; border: 1.5px solid #e6eef8; border-radius: 10px;
+      margin-bottom: 10px; cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .checkbox-group:hover { border-color: var(--c-sub2); background: #fafcff; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--c-main); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+    .checkbox-label { font-size: 13px; line-height: 1.55; color: var(--c-text); }
+    .checkbox-label strong { background: none; color: var(--c-main); font-weight: 700; }
+    .form-error-box {
+      font-size: 13px; color: #d94f4f; display: none;
+      margin-bottom: 12px; padding: 10px 13px;
+      background: #fff5f5; border-radius: 9px; border: 1px solid #f5d0d0;
+    }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--c-main), var(--c-sub1)); color: #fff;
+      border: none; border-radius: 11px; padding: 14px;
+      font-size: 15px; font-weight: 800; font-family: inherit;
+      cursor: pointer; transition: opacity .15s, transform .15s; margin-top: 4px;
+    }
+    .btn-submit:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .success-state { text-align: center; padding: 20px 0 8px; }
+    .success-check {
+      width: 64px; height: 64px; background: #e8f5e9; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; color: #22c55e;
+    }
+    .success-state h3 { font-size: 20px; font-weight: 900; color: var(--c-main); margin-bottom: 8px; }
+    .success-state p { font-size: 14px; color: var(--c-muted); line-height: 1.65; }
+
+    /* ── 피드백 미니 서베이 스타일 ── */
+    .survey-section-label {
+      font-size: 13px; font-weight: 800; color: var(--c-text);
+      margin-bottom: 10px; display: block;
+    }
+    .survey-section-label .req { color: var(--c-sub1); margin-left: 2px; }
+
+    /* 만족도 이모지 버튼 */
+    .rating-row {
+      display: flex; gap: 8px; margin-bottom: 20px;
+    }
+    .rating-btn {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      padding: 10px 4px;
+      border: 2px solid #e6eef8; border-radius: 12px;
+      background: #fafcff; cursor: pointer;
+      font-family: inherit; transition: border-color .15s, background .15s, transform .12s;
+    }
+    .rating-btn:hover { border-color: var(--c-sub2); background: var(--c-sub3); transform: translateY(-2px); }
+    .rating-btn.selected { border-color: var(--c-main); background: var(--c-sub3); }
+    .rating-emoji { font-size: 24px; line-height: 1; }
+    .rating-label { font-size: 10px; font-weight: 700; color: var(--c-muted); }
+    .rating-btn.selected .rating-label { color: var(--c-main); }
+
+    /* 아티클 선택 라디오 */
+    .article-radio-list {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .article-radio-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border: 1.5px solid #e6eef8; border-radius: 10px;
+      cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .article-radio-item:hover { border-color: var(--c-sub2); background: #fafcff; }
+    .article-radio-item input[type="radio"] { accent-color: var(--c-main); margin-top: 2px; flex-shrink: 0; }
+    .article-radio-item.selected { border-color: var(--c-sub1); background: #eef5ff; }
+    .article-radio-label { font-size: 13px; line-height: 1.5; color: var(--c-text); font-weight: 500; }
+
+    .feedback-textarea {
+      width: 100%; border: 1.5px solid #d8e5f5; border-radius: 10px;
+      padding: 12px 14px; font-size: 14px; font-family: inherit;
+      color: var(--c-text); background: #fafcff; resize: vertical;
+      min-height: 80px; outline: none; transition: border-color .15s;
+      margin-bottom: 14px;
+    }
+    .feedback-textarea:focus { border-color: var(--c-sub1); background: #fff; }
+
+    @media (max-width: 520px) {
+      .nl-section, .summary-section, .article-section, .cta-section, .feedback-section { padding: 24px 20px; }
+      .article-title { font-size: 18px; }
+      .feedback-btn-row { flex-direction: column; }
+      .share-panel { width: 260px; }
+      .modal { padding: 28px 20px 24px; }
+      .rating-btn { padding: 8px 2px; }
+      .rating-emoji { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="index.html" class="top-bar-logo">
+    <span class="top-bar-logo-dot"></span>
+    WAYBLE Newsletter
+  </a>
+  <button class="top-bar-sub-btn" id="topbar-subscribe-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+    </svg>
+    구독하기
+  </button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="issue-chip" id="issue-tag">WAYBLE Newsletter &nbsp;·&nbsp; No. —</div>
+    <h1 id="hero-headline">불러오는 중…</h1>
+    <div class="hero-date" id="hero-date">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+      </svg>
+    </div>
+    <div class="hero-actions">
+      <button class="share-trigger" id="share-trigger">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>
+        </svg>
+        공유하기
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 공유 패널 — hero 바깥에 위치해 overflow 클리핑 없음 -->
+<div class="share-panel" id="share-panel">
+  <div class="share-panel-title">공유하기</div>
+  <div class="share-social-row">
+    <a class="share-social-btn" id="share-facebook" href="#" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <a class="share-social-btn" id="share-threads" href="#" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 192 192" fill="#000"><path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 143.067 158.133C132.501 168.683 119.496 173.248 99.0956 173.4C76.5060 173.235 59.2076 166.13 48.8303 152.285C39.2207 139.453 34.2367 120.17 34.0956 95C34.2367 69.8295 39.2207 50.5469 48.8303 37.7151C59.2076 23.8698 76.5060 16.7648 99.0956 16.6C121.906 16.7648 139.527 23.9064 150.139 37.8166C155.338 44.6435 159.11 53.5519 161.398 64.3654L178.578 60.0958C175.698 46.3751 170.469 34.8189 163.03 25.6133C149.876 9.24482 130.055 0.966145 99.1817 0.75C68.3835 0.966145 48.3867 9.24482 35.1036 25.6133C23.1241 40.4957 16.9556 62.4394 16.75 95C16.9556 127.561 23.1241 149.504 35.1036 164.387C48.3867 180.755 68.3835 189.034 99.1817 189.25C132.922 189.034 155.346 180.353 168.971 166.649C184.394 151.115 183.94 131.046 179.028 120.259C175.053 111.479 167.526 104.636 158.011 100.224ZM98.4143 129.507C88.2062 130.095 77.5542 125.5 77.0476 115.887C76.6681 108.667 82.0581 100.958 98.8141 99.9791C100.914 99.8553 102.981 99.7925 105.013 99.7925C111.339 99.7925 117.338 100.395 122.914 101.559C120.962 124.408 109.413 128.946 98.4143 129.507Z"/></svg>
+      Threads
+    </a>
+    <button class="share-social-btn" id="share-instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </button>
+  </div>
+  <div class="share-url-row">
+    <input class="share-url-input" id="share-url-input" readonly>
+    <button class="share-copy-btn" id="share-copy-btn">복사</button>
+  </div>
+</div>
+
+<div class="wave-divider">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" width="100%" height="60" preserveAspectRatio="none">
+    <path fill="#EEF4FC" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<!-- 통합 뉴스레터 카드 -->
+<div class="content-wrap">
+  <div class="newsletter-card" id="newsletter-card"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">WAYBLE Newsletter</div>
+  <p><a href="https://circular.wayble.eco" target="_blank" rel="noopener">WAYBLE</a> &nbsp;·&nbsp; 순환경제 플랫폼</p>
+  <p style="margin-top:6px;">ⓒ 2026 WAYBLE. All rights reserved.</p>
+</footer>
+
+<!-- 구독 모달 -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="form-view">
+      <div class="modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+        </svg>
+      </div>
+      <h2>WAYBLE Newsletter 구독하기</h2>
+      <p class="modal-desc">매주 월요일, 국내 ESG 핵심 이슈를 이메일로 받아보세요.</p>
+      <form id="subscribe-form" novalidate>
+        <div class="form-group">
+          <label for="sub-name">이름 <span class="required">*</span></label>
+          <input type="text" id="sub-name" placeholder="홍길동" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="sub-email">이메일 <span class="required">*</span></label>
+          <input type="email" id="sub-email" placeholder="hello@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="checkbox-group">
+            <input type="checkbox" id="agree-privacy">
+            <span class="checkbox-label"><strong>[필수]</strong> 개인정보 수집·이용에 동의합니다.<br><span style="font-size:12px;color:var(--c-muted);">이름, 이메일을 뉴스레터 발송 목적으로 수집합니다.</span></span>
+          </label>
+          <label class="checkbox-group">
+            <input type="checkbox" id="agree-marketing">
+            <span class="checkbox-label"><strong>[필수]</strong> 마케팅 정보 수신 및 활용에 동의합니다.<br><span style="font-size:12px;color:var(--c-muted);">WAYBLE의 소식 및 ESG 관련 정보를 수신합니다.</span></span>
+          </label>
+        </div>
+        <div class="form-error-box" id="sub-error"></div>
+        <button type="submit" class="btn-submit" id="btn-submit">구독 신청하기</button>
+      </form>
+    </div>
+    <div id="success-view" style="display:none">
+      <div class="success-state">
+        <div class="success-check"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>구독 신청이 완료되었습니다!</h3>
+        <p>매주 월요일, 따끈한 ESG 뉴스를<br>이메일로 보내드릴게요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 피드백 모달 -->
+<div class="modal-overlay" id="feedback-overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="feedback-close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="feedback-form-view">
+      <div class="modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h2>이번 호 어떠셨나요?</h2>
+      <p class="modal-desc">솔직한 한 마디가 더 좋은 뉴스레터를 만듭니다.</p>
+
+      <!-- Q1: 만족도 -->
+      <div class="form-group">
+        <span class="survey-section-label">Q1. 전반적인 만족도는요? <span class="req">*</span></span>
+        <div class="rating-row" id="rating-row">
+          <button type="button" class="rating-btn" data-score="1">
+            <span class="rating-emoji">😞</span>
+            <span class="rating-label">별로예요</span>
+          </button>
+          <button type="button" class="rating-btn" data-score="2">
+            <span class="rating-emoji">😐</span>
+            <span class="rating-label">그저 그래요</span>
+          </button>
+          <button type="button" class="rating-btn" data-score="3">
+            <span class="rating-emoji">🙂</span>
+            <span class="rating-label">괜찮아요</span>
+          </button>
+          <button type="button" class="rating-btn" data-score="4">
+            <span class="rating-emoji">😊</span>
+            <span class="rating-label">좋아요</span>
+          </button>
+          <button type="button" class="rating-btn" data-score="5">
+            <span class="rating-emoji">🤩</span>
+            <span class="rating-label">최고예요!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Q2: 베스트 아티클 -->
+      <div class="form-group">
+        <span class="survey-section-label">Q2. 가장 도움이 된 아티클은?</span>
+        <div class="article-radio-list" id="article-radio-list">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+
+      <!-- Q3: 자유 의견 -->
+      <div class="form-group">
+        <span class="survey-section-label">Q3. 한 줄 의견 (선택)</span>
+        <textarea class="feedback-textarea" id="fb-content" placeholder="좋았던 점, 개선할 점, 원하는 주제 등을 자유롭게 적어주세요."></textarea>
+      </div>
+
+      <!-- Q4: 이메일 -->
+      <div class="form-group">
+        <label for="fb-email">이메일 (선택, 답장 원하시면 입력)</label>
+        <input type="email" id="fb-email" placeholder="hello@example.com">
+      </div>
+
+      <div class="form-error-box" id="fb-error"></div>
+      <button type="button" class="btn-submit" id="feedback-submit">피드백 제출하기</button>
+    </div>
+    <div id="feedback-success-view" style="display:none">
+      <div class="success-state">
+        <div class="success-check"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>피드백 감사합니다!</h3>
+        <p>소중한 의견을 잘 받았어요.<br>더 나은 뉴스레터로 보답할게요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="newsletter-data.js"></script>
+<script>
+(function () {
+  const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxbGiUpIhBDVVNWrqF1HFgR-1sfs1DJf3LheqGARC5BqtHvDmJgAox_7AG7wGjuNhno/exec";
+
+  const params   = new URLSearchParams(location.search);
+  const issueNum = parseInt(params.get('issue'), 10);
+  const data     = typeof NEWSLETTERS !== 'undefined' ? NEWSLETTERS : [];
+  const issue    = data.find(n => n.issue === issueNum);
+
+  function formatDate(str) {
+    const [y, m, d] = str.split('-');
+    return `${y}년 ${parseInt(m)}월 ${parseInt(d)}일 발행`;
+  }
+
+  function toParagraphs(text) {
+    return text.trim().split(/\n\n+/).map(p => `<p>${p.trim()}</p>`).join('');
+  }
+
+  function renderNotFound() {
+    document.getElementById('hero-headline').textContent = '해당 호를 찾을 수 없습니다.';
+    document.getElementById('newsletter-card').innerHTML = `
+      <div class="nl-section not-found"><h2>존재하지 않는 호입니다</h2>
+      <p>URL을 확인하거나 <a href="index.html" style="color:var(--c-sub1)">목록으로 돌아가세요</a>.</p></div>`;
+  }
+
+  function renderIssue(n) {
+    document.title = `WAYBLE Newsletter No.${n.issue} — ${n.headMessage}`;
+    document.getElementById('issue-tag').innerHTML = `WAYBLE Newsletter &nbsp;·&nbsp; No. ${n.issue}`;
+    document.getElementById('hero-headline').textContent = n.headMessage;
+    document.getElementById('hero-date').innerHTML = `
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+      </svg> ${formatDate(n.date)}`;
+    document.getElementById('share-url-input').value = location.href;
+
+    // TOC
+    const tocHTML = n.articles.map((a, i) => `
+      <li>
+        <span class="toc-num">${String(i + 1).padStart(2, '0')}</span>
+        <a class="toc-link" href="#article-${i}">${a.title}</a>
+      </li>`).join('');
+
+    // 아티클 (번호 없이 "Article"만 표기, 중앙정렬)
+    const articlesHTML = n.articles.map((a, i) => `
+      <div class="nl-divider"></div>
+      <div class="article-section" id="article-${i}">
+        <div class="article-num-row">
+          <span class="article-num-badge">Article</span>
+        </div>
+        <div class="article-title">${a.title}</div>
+        <div class="article-body">${toParagraphs(a.summary)}</div>
+        <div class="article-meta-row">
+          <div class="article-source">
+            출처 &nbsp;|&nbsp; <strong>${a.source ? a.source.press : ''}</strong>${a.source ? ` &nbsp;·&nbsp; ${a.source.date}` : ''}
+          </div>
+          <a href="${a.link}" target="_blank" rel="noopener" class="article-link">
+            원문 보기
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+          </a>
+        </div>
+      </div>`).join('');
+
+    document.getElementById('newsletter-card').innerHTML = `
+      <div class="summary-section">
+        <div class="summary-label">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          이번 호 요약
+        </div>
+        <p class="summary-text">${n.summary}</p>
+        <ul class="toc-list">${tocHTML}</ul>
+      </div>
+      ${articlesHTML}
+      <div class="nl-divider"></div>
+      <div class="cta-section">
+        <a href="https://circular.wayble.eco" target="_blank" rel="noopener" class="btn-wayble">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          WAYBLE 홈페이지 방문하기
+        </a>
+      </div>
+      <div class="nl-divider"></div>
+      <div class="feedback-section">
+        <div class="feedback-emoji">💬</div>
+        <h3>오늘 웨이블 뉴스레터는 어땠나요?</h3>
+        <p>더 나은 콘텐츠를 만들기 위해 여러분의 피드백을 기다리고 있어요.</p>
+        <div class="feedback-btn-row">
+          <button class="btn-fb btn-fb-outline" id="btn-feedback">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            피드백 보내기
+          </button>
+          <button class="btn-fb btn-fb-solid" id="btn-subscribe">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+            뉴스레터 구독하기
+          </button>
+        </div>
+      </div>`;
+
+    document.getElementById('btn-subscribe').addEventListener('click', openSubModal);
+    document.getElementById('btn-feedback').addEventListener('click', openFbModal);
+
+    // 피드백 모달 아티클 라디오 버튼 동적 생성
+    const radioList = document.getElementById('article-radio-list');
+    radioList.innerHTML = n.articles.map((a, i) => `
+      <label class="article-radio-item" id="radio-item-${i}">
+        <input type="radio" name="best-article" value="${i + 1}. ${a.title}">
+        <span class="article-radio-label">${i + 1}. ${a.title}</span>
+      </label>`).join('') + `
+      <label class="article-radio-item" id="radio-item-none">
+        <input type="radio" name="best-article" value="해당 없음">
+        <span class="article-radio-label">해당 없음</span>
+      </label>`;
+
+    // 라디오 선택 시 스타일 적용
+    radioList.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        radioList.querySelectorAll('.article-radio-item').forEach(el => el.classList.remove('selected'));
+        radio.closest('.article-radio-item').classList.add('selected');
+      });
+    });
+
+    // TOC 스크롤 (scroll-margin-top이 CSS에서 처리)
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  if (!issue) renderNotFound();
+  else renderIssue(issue);
+
+  // ── 만족도 버튼 ──
+  let selectedRating = 0;
+  document.getElementById('rating-row').addEventListener('click', function(e) {
+    const btn = e.target.closest('.rating-btn');
+    if (!btn) return;
+    selectedRating = parseInt(btn.dataset.score, 10);
+    document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+
+  // ── 구독 모달 ──
+  const subOverlay = document.getElementById('modal-overlay');
+  function openSubModal()  { subOverlay.classList.add('open'); }
+  function closeSubModal() { subOverlay.classList.remove('open'); }
+  subOverlay.addEventListener('click', e => { if (e.target === subOverlay) closeSubModal(); });
+  document.getElementById('modal-close').addEventListener('click', closeSubModal);
+  document.getElementById('topbar-subscribe-btn').addEventListener('click', openSubModal);
+
+  document.getElementById('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const name    = document.getElementById('sub-name').value.trim();
+    const email   = document.getElementById('sub-email').value.trim();
+    const privacy = document.getElementById('agree-privacy').checked;
+    const mkt     = document.getElementById('agree-marketing').checked;
+    const errBox  = document.getElementById('sub-error');
+    const btn     = document.getElementById('btn-submit');
+
+    const showErr = msg => { errBox.textContent = msg; errBox.style.display = 'block'; };
+    if (!name)    return showErr('이름을 입력해주세요.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('올바른 이메일 주소를 입력해주세요.');
+    if (!privacy) return showErr('개인정보 수집·이용 동의가 필요합니다.');
+    if (!mkt)     return showErr('마케팅 활용 동의가 필요합니다.');
+
+    errBox.style.display = 'none';
+    btn.disabled = true; btn.textContent = '신청 중…';
+    try {
+      const body = new URLSearchParams({
+        type: 'subscribe', name, email,
+        privacyAgree: String(privacy), marketingAgree: String(mkt)
+      });
+      await fetch(GAS_ENDPOINT, { method: 'POST', body });
+      document.getElementById('form-view').style.display = 'none';
+      document.getElementById('success-view').style.display = 'block';
+    } catch {
+      showErr('전송 중 오류가 발생했습니다.'); btn.disabled = false; btn.textContent = '구독 신청하기';
+    }
+  });
+
+  // ── 피드백 모달 ──
+  const fbOverlay = document.getElementById('feedback-overlay');
+  function openFbModal()  { fbOverlay.classList.add('open'); }
+  function closeFbModal() { fbOverlay.classList.remove('open'); }
+  fbOverlay.addEventListener('click', e => { if (e.target === fbOverlay) closeFbModal(); });
+  document.getElementById('feedback-close').addEventListener('click', closeFbModal);
+
+  document.getElementById('feedback-submit').addEventListener('click', async function () {
+    const errBox  = document.getElementById('fb-error');
+    const btn     = this;
+
+    if (!selectedRating) {
+      errBox.textContent = '만족도를 선택해주세요.';
+      errBox.style.display = 'block';
+      return;
+    }
+
+    const ratingLabels = ['', '별로예요', '그저 그래요', '괜찮아요', '좋아요', '최고예요!'];
+    const bestArticleEl = document.querySelector('input[name="best-article"]:checked');
+    const bestArticle   = bestArticleEl ? bestArticleEl.value : '선택 안 함';
+    const comment       = document.getElementById('fb-content').value.trim();
+    const email         = document.getElementById('fb-email').value.trim();
+
+    // GAS content 필드에 서베이 결과 통합
+    const content = [
+      `[만족도] ${selectedRating}점 — ${ratingLabels[selectedRating]}`,
+      `[베스트 아티클] ${bestArticle}`,
+      comment ? `[의견] ${comment}` : ''
+    ].filter(Boolean).join('\n');
+
+    errBox.style.display = 'none';
+    btn.disabled = true; btn.textContent = '제출 중…';
+    try {
+      const body = new URLSearchParams({
+        type: 'feedback',
+        issue: String(issueNum),
+        content,
+        email
+      });
+      await fetch(GAS_ENDPOINT, { method: 'POST', body });
+      document.getElementById('feedback-form-view').style.display = 'none';
+      document.getElementById('feedback-success-view').style.display = 'block';
+    } catch {
+      errBox.textContent = '전송 중 오류가 발생했습니다.'; errBox.style.display = 'block';
+      btn.disabled = false; btn.textContent = '피드백 제출하기';
+    }
+  });
+
+  // ── ESC ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeSubModal(); closeFbModal(); closeSharePanel(); }
+  });
+
+  // ── 공유 패널 (position: fixed — JS로 위치 계산) ──
+  const sharePanel   = document.getElementById('share-panel');
+  const shareTrigger = document.getElementById('share-trigger');
+
+  function positionSharePanel() {
+    const rect = shareTrigger.getBoundingClientRect();
+    const panelW = 290;
+    let right = window.innerWidth - rect.right;
+    if (right < 8) right = 8;
+    sharePanel.style.top   = (rect.bottom + 8) + 'px';
+    sharePanel.style.right = right + 'px';
+    sharePanel.style.left  = 'auto';
+  }
+
+  function closeSharePanel() { sharePanel.classList.remove('open'); }
+
+  shareTrigger.addEventListener('click', e => {
+    e.stopPropagation();
+    if (sharePanel.classList.toggle('open')) positionSharePanel();
+  });
+  document.addEventListener('click', e => {
+    if (!sharePanel.contains(e.target) && e.target !== shareTrigger) closeSharePanel();
+  });
+  window.addEventListener('resize', () => { if (sharePanel.classList.contains('open')) positionSharePanel(); });
+
+  document.getElementById('share-copy-btn').addEventListener('click', function () {
+    navigator.clipboard.writeText(location.href).then(() => {
+      this.textContent = '복사됨 ✓'; this.classList.add('copied');
+      setTimeout(() => { this.textContent = '복사'; this.classList.remove('copied'); }, 2000);
+    });
+  });
+
+  const pageUrl   = encodeURIComponent(location.href);
+  const pageTitle = encodeURIComponent(issue ? issue.headMessage : 'WAYBLE Newsletter');
+  document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+  document.getElementById('share-threads').href  = `https://www.threads.net/intent/post?text=${pageTitle}%20${pageUrl}`;
+  document.getElementById('share-instagram').addEventListener('click', function () {
+    navigator.clipboard.writeText(location.href).then(() => {
+      alert('링크가 복사되었습니다!\nInstagram 앱에서 스토리 또는 DM에 붙여넣기 해주세요.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
