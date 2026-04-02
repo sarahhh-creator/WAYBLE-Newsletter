@@ -6,9 +6,36 @@
 
 const NEWSLETTERS = [
   {
+    issue: 5,
+    date: "2026-04-02",
+    headMessage: "인권위 \"ESG · 민병덕 ”기업은 · 인권위 “2027년부터",
+    summary: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\", 민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매, 인권위 “2027년부터 ESG 공시해야”.",
+    articles: [
+      {
+        title: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\"",
+        summary: `인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\" 뉴시스 \"기업, ESG 공시 비용·부담 커져...인센티브도 가시화돼야\" v.daum.net 인권위 \"ESG 의무 공시 1년 앞당기고 대상 기업 확대해야\" 연합뉴스 인권위 \"ESG 공시 자산 10조 기업으로 확대…인권 공시 포함해야\" 뉴스1 인권위 “ESG 공시 의무화, 2027년으로 앞당기고 대상 기업 확대해야” - 조선비즈 Chosunbiz 인권위 “금융위 ESG 공시, 기업 늘리고 인권 지표 포함해야” 서울경제`,
+        source: { press: "뉴시스", title: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\"", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5lY1ZETm9QQmVORWlTODVsdVBpOUROYkRjYVdfMk9SZFZzR014OFRiaG9BN0hxZGJjNlZSSGNtc1E1Tk41eU1GSjAyQjlXZEU3bFp5cVdLVTRoSWhoMnNmbNIBeEFVX3lxTFBFOFdsZ09OREZDNm9FTEU3TENwSV9wU0hnZzBzY3pEY3kzaXpycERpMm84NEVKckJ1a2FqQmE3SUstVi13dURtc1JHNHB1ZXBvemR5NGZZU0pvMW9ESDdsRTIwLWlCRlJIOGhwTEJvZ2VSTWtVWm45Nw?oc=5&hl=en-US&gl=US&ceid=US:en"
+      },
+      {
+        title: "민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매",
+        summary: `민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매 이투데이`,
+        source: { press: "이투데이", title: "민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMidEFVX3lxTFA2dEs1WFhGaHRKWFVjYkYxdnJSazlIaDFkMm9lejRtRW85dGlvV3VkalZpaUpMRTZpaE9vbEpXRWNralNtd2NxQnEtazctM25NVnBzRURpd3BzXzQxQjYtckkxQ2J5OFlXdXhkTUhmVjlRRF9E?oc=5&hl=en-US&gl=US&ceid=US:en"
+      },
+      {
+        title: "인권위 “2027년부터 ESG 공시해야”",
+        summary: `인권위 “2027년부터 ESG 공시해야” 매일노동뉴스`,
+        source: { press: "매일노동뉴스", title: "인권위 “2027년부터 ESG 공시해야”", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMicEFVX3lxTE9MelBqR1kwZlZ4M1VBSXhSdlpCWDJCOEZITkJfd05ONzY3Uko0U3pLb0lBVF9ZTUJmcERUeTN5UmNvcGlHRG03TkZWQWZtLTZTam9KZVpxTTJsZ19pbmVPRTd6NUhiSmpvMVk2SllaeVM?oc=5&hl=en-US&gl=US&ceid=US:en"
+      }
+    ]
+  },
+
+  {
     issue: 4,
     date: "2026-04-02",
-    headMessage: "인권위 \"ESG 쨌 민병덕 ”기업은 쨌 인권위 “2027년부터",
+    headMessage: “인권위 ESG 공시 의무화 촉구 · 금융위 공시 대상 축소 논란 · 2027년 조기 시행 요구”,
     summary: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\", 민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매, 인권위 “2027년부터 ESG 공시해야”.",
     articles: [
       {
@@ -28,39 +55,6 @@ const NEWSLETTERS = [
         summary: `인권위 “2027년부터 ESG 공시해야” &nbsp;&nbsp; 매일노동뉴스`,
         source: { press: "매일노동뉴스", title: "인권위 “2027년부터 ESG 공시해야”", date: "2026-04-02" },
         link: "https://news.google.com/rss/articles/CBMicEFVX3lxTE9MelBqR1kwZlZ4M1VBSXhSdlpCWDJCOEZITkJfd05ONzY3Uko0U3pLb0lBVF9ZTUJmcERUeTN5UmNvcGlHRG03TkZWQWZtLTZTam9KZVpxTTJsZ19pbmVPRTd6NUhiSmpvMVk2SllaeVM?oc=5&hl=ko&gl=KR&ceid=KR:ko"
-      }
-    ]
-  },
-
-  {
-    issue: 3,
-    date: "2026-04-02",
-    headMessage: "트럼프 \"이란 쨌 삼성중공업 FLNG 쨌 미드니켈 배터리",
-    summary: "트럼프 \"이란, 석기시대로 만들것\" ···추가 공격 예고에 유가 다시 100달러 돌파, 삼성중공업, FLNG 발판 삼아 美 공략··· “친환경 가스선으로 확장”, 미드니켈 배터리, K-배터리 반격의 신호탄 | This week ESG key issues.",
-    articles: [
-      {
-        title: "트럼프 \"이란, 석기시대로 만들것\" ···추가 공격 예고에 유가 다시 100달러 돌파",
-        summary: `\"우리는 앞으로 2~3주 동안 그들을 극도로 강하게 타격할 것이다. 그들을 석기시대로 돌려보낼 것이다.\"도널드 트럼프 미국 대통령이 2일(현지시간) 대국민 연설을 통해 이란에 대한 군사작전을 향후 2~3주간 더 강화하겠다고 공식 선언했다. 종전 협상 타결을 기대했던 시장의 기대와 달리 공세 지속 의지를 분명히 한 이번 연설에 국제 금융시장은 즉각 충격을 받았다. 국제 유가가 급등하고, 위험자산 회피 심리가 확산됐다. \"용기 내서 직접 가져가라\"…호르무즈 책임을 동맹에 전가이번 연설에서 세계 각국에 가장 큰 충격을 준 부분은 호르무즈\"우리는 앞으로 2~3주 동안 그들을 극도로 강하게 타격할 것이다.
-
-그들을 석기시대로 돌려보낼 것이다.\"도널드 트럼프 미국 대통령이 2일(현지시간) 대국민 연설을 통해 이란에 대한 군사작전을 향후 2~3주간 더 강화하겠다고 공식 선언했다. 종전 협상 타결을 기대했던 시장의 기대와 달리 공세 지속 의지를 분명히 한 이번 연설에 국제 금융시장은 즉각 충격을 받았다. 국제 유가가 급등하고, 위험자산 회피 심리가 확산됐다. \"용기 내서 직접 가져가라\"…호르무즈 책임을 동맹에 전가이번 연설에서 세계 각국에 가장 큰 충격을 준 부분은 호르무즈`,
-        source: { press: "GreenPost", title: "트럼프 \"이란, 석기시대로 만들것\" ···추가 공격 예고에 유가 다시 100달러 돌파", date: "2026-04-02" },
-        link: "https://www.greenpostkorea.co.kr/news/articleView.html?idxno=306444"
-      },
-      {
-        title: "삼성중공업, FLNG 발판 삼아 美 공략··· “친환경 가스선으로 확장”",
-        summary: `삼성중공업이 부유식 액화천연가스 생산설비(FLNG), 미국, 친환경 가스선 등을 축으로 한 전략을 통해 사업 포트폴리오 재편에 속도를 내고 있다. 수주 확대 중심에서 벗어나 기술 경쟁력, 시장 구조, 제품 구성을 동시에 재편하는 접근으로 풀이된다. FLNG를 통한 고부가가치 시장 지배력 확보와 미국 등으로의 발주처 다변화, 친환경 가스선 중심의 선종 믹스 개선이 병행되고 있다. 업황 호조 국면에서도 발주 편중과 지정학 변수에 대한 대응 전략을 선제적으로 구축하려는 포석으로 읽힌다.FLNG ‘초격차’ 승부수··· 조선 넘어 에너지 설삼성중공업이 부유식 액화천연가스 생산설비(FLNG), 미국, 친환경 가스선 등을 축으로 한 전략을 통해 사업 포트폴리오 재편에 속도를 내고 있다.
-
-수주 확대 중심에서 벗어나 기술 경쟁력, 시장 구조, 제품 구성을 동시에 재편하는 접근으로 풀이된다. FLNG를 통한 고부가가치 시장 지배력 확보와 미국 등으로의 발주처 다변화, 친환경 가스선 중심의 선종 믹스 개선이 병행되고 있다. 업황 호조 국면에서도 발주 편중과 지정학 변수에 대한 대응 전략을 선제적으로 구축하려는 포석으로 읽힌다.FLNG ‘초격차’ 승부수··· 조선 넘어 에너지 설`,
-        source: { press: "GreenPost", title: "삼성중공업, FLNG 발판 삼아 美 공략··· “친환경 가스선으로 확장”", date: "2026-04-02" },
-        link: "https://www.greenpostkorea.co.kr/news/articleView.html?idxno=306443"
-      },
-      {
-        title: "미드니켈 배터리, K-배터리 반격의 신호탄",
-        summary: `한국 배터리 3사가 중국의 저가 리튬인산철(LFP) 공세에 맞서 '미드니켈 배터리'를 전면에 내세우며 글로벌 전기차 배터리 시장 재편에 나섰다. 현대자동차그룹이 내년부터 자사 전기차에 미드니켈 배터리를 탑재하기로 하면서 한국 배터리 산업의 중심축이 하이니켈에서 미드니켈로 무게중심을 옮기고 있다.내년 미드니켈 전기차 도입 추진… 배터리 3사도 개발 대응2일 배터리 업계에 따르면 현대차그룹은 내년부터 자사 전기차에 삼원계(NCM) 기반 미드니켈 배터리를 탑재하는 방안을 확정했다. 현대차그룹은 기존 하이니켈 NCM 배터리에서 니켈 비중을한국 배터리 3사가 중국의 저가 리튬인산철(LFP) 공세에 맞서 '미드니켈 배터리'를 전면에 내세우며 글로벌 전기차 배터리 시장 재편에 나섰다.
-
-현대자동차그룹이 내년부터 자사 전기차에 미드니켈 배터리를 탑재하기로 하면서 한국 배터리 산업의 중심축이 하이니켈에서 미드니켈로 무게중심을 옮기고 있다.내년 미드니켈 전기차 도입 추진… 배터리 3사도 개발 대응2일 배터리 업계에 따르면 현대차그룹은 내년부터 자사 전기차에 삼원계(NCM) 기반 미드니켈 배터리를 탑재하는 방안을 확정했다. 현대차그룹은 기존 하이니켈 NCM 배터리에서 니켈 비중을`,
-        source: { press: "GreenPost", title: "미드니켈 배터리, K-배터리 반격의 신호탄", date: "2026-04-02" },
-        link: "https://www.greenpostkorea.co.kr/news/articleView.html?idxno=306433"
       }
     ]
   },
