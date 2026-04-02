@@ -6,6 +6,33 @@
 
 const NEWSLETTERS = [
   {
+    issue: 4,
+    date: "2026-04-02",
+    headMessage: "인권위 \"ESG 쨌 민병덕 ”기업은 쨌 인권위 “2027년부터",
+    summary: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\", 민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매, 인권위 “2027년부터 ESG 공시해야”.",
+    articles: [
+      {
+        title: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\"",
+        summary: `인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\" &nbsp;&nbsp; 뉴시스 \"기업, ESG 공시 비용·부담 커져...인센티브도 가시화돼야\" &nbsp;&nbsp; v.daum.net 인권위 \"ESG 의무 공시 1년 앞당기고 대상 기업 확대해야\" &nbsp;&nbsp; 연합뉴스 인권위 \"ESG 공시 자산 10조 기업으로 확대…인권 공시 포함해야\" &nbsp;&nbsp; 뉴스1 인권위 “ESG 공시 의무화, 2027년으로 앞당기고 대상 기업 확대해야” - 조선비즈 &nbsp;&nbsp; Chosunbiz 인권위 “금융위 ESG 공시, 기업 늘리고 인권 지표 포함해야” &nbsp;&nbsp; 서울경제`,
+        source: { press: "뉴시스", title: "인권위 \"ESG 공시 대상 기업확대하고 인권 지표 의무화해야\"", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5lY1ZETm9QQmVORWlTODVsdVBpOUROYkRjYVdfMk9SZFZzR014OFRiaG9BN0hxZGJjNlZSSGNtc1E1Tk41eU1GSjAyQjlXZEU3bFp5cVdLVTRoSWhoMnNmbNIBeEFVX3lxTFBFOFdsZ09OREZDNm9FTEU3TENwSV9wU0hnZzBzY3pEY3kzaXpycERpMm84NEVKckJ1a2FqQmE3SUstVi13dURtc1JHNHB1ZXBvemR5NGZZU0pvMW9ESDdsRTIwLWlCRlJIOGhwTEJvZ2VSTWtVWm45Nw?oc=5&hl=ko&gl=KR&ceid=KR:ko"
+      },
+      {
+        title: "민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매",
+        summary: `민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매 &nbsp;&nbsp; 이투데이`,
+        source: { press: "이투데이", title: "민병덕 ”기업은 준비됐다는데 금융위만 뒤로”⋯ESG 공시 대상 축소에 뭇매", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMidEFVX3lxTFA2dEs1WFhGaHRKWFVjYkYxdnJSazlIaDFkMm9lejRtRW85dGlvV3VkalZpaUpMRTZpaE9vbEpXRWNralNtd2NxQnEtazctM25NVnBzRURpd3BzXzQxQjYtckkxQ2J5OFlXdXhkTUhmVjlRRF9E?oc=5&hl=ko&gl=KR&ceid=KR:ko"
+      },
+      {
+        title: "인권위 “2027년부터 ESG 공시해야”",
+        summary: `인권위 “2027년부터 ESG 공시해야” &nbsp;&nbsp; 매일노동뉴스`,
+        source: { press: "매일노동뉴스", title: "인권위 “2027년부터 ESG 공시해야”", date: "2026-04-02" },
+        link: "https://news.google.com/rss/articles/CBMicEFVX3lxTE9MelBqR1kwZlZ4M1VBSXhSdlpCWDJCOEZITkJfd05ONzY3Uko0U3pLb0lBVF9ZTUJmcERUeTN5UmNvcGlHRG03TkZWQWZtLTZTam9KZVpxTTJsZ19pbmVPRTd6NUhiSmpvMVk2SllaeVM?oc=5&hl=ko&gl=KR&ceid=KR:ko"
+      }
+    ]
+  },
+
+  {
     issue: 3,
     date: "2026-04-02",
     headMessage: "트럼프 \"이란 쨌 삼성중공업 FLNG 쨌 미드니켈 배터리",
